@@ -3,10 +3,7 @@ package crud.memo.controller;
 import crud.memo.dto.MemoRequestDto;
 import crud.memo.dto.MemoResponseDto;
 import crud.memo.entity.Memo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +27,13 @@ public class MemoController {
 
         // Inmemory DB에 저장
         memoMap.put(memoId, memo);
+
+        return new MemoResponseDto(memo);
+    }
+
+    @GetMapping("/{id}")
+    public MemoResponseDto findMemoById(@PathVariable Long id) {
+        Memo memo = memoMap.get(id);
 
         return new MemoResponseDto(memo);
     }
