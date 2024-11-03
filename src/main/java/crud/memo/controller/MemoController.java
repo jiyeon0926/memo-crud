@@ -73,6 +73,25 @@ public class MemoController {
         return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateTitle(
+            @PathVariable Long id,
+            @RequestBody MemoRequestDto requestDto) {
+        Memo memo = memoMap.get(id);
+
+        if (memo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (requestDto.getTitle() == null || requestDto.getContents() != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        memo.updateTitle(requestDto);
+
+        return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteMemo(@PathVariable Long id) {
         memoMap.remove(id);
