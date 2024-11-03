@@ -93,7 +93,13 @@ public class MemoController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMemo(@PathVariable Long id) {
-        memoMap.remove(id);
+    public ResponseEntity<Void> deleteMemo(@PathVariable Long id) {
+        // Key 값에 id를 포함하고 있으면 삭제
+        if (memoMap.containsKey(id)) {
+            memoMap.remove(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
