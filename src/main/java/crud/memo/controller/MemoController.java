@@ -54,13 +54,23 @@ public class MemoController {
     }
 
     @PutMapping("/{id}")
-    public MemoResponseDto updateMemoById(
+    public ResponseEntity<MemoResponseDto> updateMemoById(
             @PathVariable Long id,
             @RequestBody MemoRequestDto requestDto) {
         Memo memo = memoMap.get(id);
+
+        if (memo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // 필수값 검증
+        if (requestDto.getTitle() == null || requestDto.getContents() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         memo.update(requestDto);
 
-        return new MemoResponseDto(memo);
+        return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
