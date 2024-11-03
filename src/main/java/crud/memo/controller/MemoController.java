@@ -3,6 +3,8 @@ package crud.memo.controller;
 import crud.memo.dto.MemoRequestDto;
 import crud.memo.dto.MemoResponseDto;
 import crud.memo.entity.Memo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -17,7 +19,7 @@ public class MemoController {
     private final Map<Long, Memo> memoMap = new HashMap<>();
 
     @PostMapping
-    public MemoResponseDto createMemo(@RequestBody MemoRequestDto requestDto) {
+    public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto requestDto) {
 
         // 식별자가 1씩 증가
         Long memoId = memoMap.isEmpty() ? 1 : Collections.max(memoMap.keySet()) + 1;
@@ -28,7 +30,7 @@ public class MemoController {
         // Inmemory DB에 저장
         memoMap.put(memoId, memo);
 
-        return new MemoResponseDto(memo);
+        return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
