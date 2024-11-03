@@ -42,10 +42,15 @@ public class MemoController {
     }
 
     @GetMapping("/{id}")
-    public MemoResponseDto findMemoById(@PathVariable Long id) {
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
         Memo memo = memoMap.get(id);
 
-        return new MemoResponseDto(memo);
+        // NullPointerException 방지
+        if (memo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
