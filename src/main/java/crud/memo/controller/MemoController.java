@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/memos")
 public class MemoController {
@@ -29,11 +31,13 @@ public class MemoController {
         return new ResponseEntity<>(memoService.saveMemo(requestDto), HttpStatus.CREATED);
     }
 
-    /*@GetMapping
-    public ResponseEntity<List<MemoResponseDto>> findAllMemos() {
+    @GetMapping
+    public List<MemoResponseDto> findAllMemos() {
+
+        return memoService.findAllMemos();
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
     }
 

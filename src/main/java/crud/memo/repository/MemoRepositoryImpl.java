@@ -1,11 +1,10 @@
 package crud.memo.repository;
 
+import crud.memo.dto.MemoResponseDto;
 import crud.memo.entity.Memo;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MemoRepositoryImpl implements MemoRepository {
@@ -22,5 +21,13 @@ public class MemoRepositoryImpl implements MemoRepository {
         memoMap.put(memoId, memo);
 
         return memo;
+    }
+
+    @Override
+    public List<MemoResponseDto> findAllMemos() {
+        List<MemoResponseDto> allMemos = new ArrayList<>();
+        allMemos = memoMap.values().stream().map(MemoResponseDto::new).toList();
+
+        return allMemos;
     }
 }
