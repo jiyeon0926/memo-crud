@@ -43,13 +43,15 @@ public class MemoController {
         return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
     }
 
-    /*@PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<MemoResponseDto> updateMemoById(
             @PathVariable Long id,
             @RequestBody MemoRequestDto requestDto) {
+
+        return new ResponseEntity<>(memoService.updateMemo(id, requestDto.getTitle(), requestDto.getContents()), HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
+    /*@PatchMapping("/{id}")
     public ResponseEntity<MemoResponseDto> updateTitle(
             @PathVariable Long id,
             @RequestBody MemoRequestDto requestDto) {
