@@ -37,11 +37,13 @@ public class MemoController {
         return memoService.findAllMemos();
     }
 
-    /*@GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    /*@PutMapping("/{id}")
     public ResponseEntity<MemoResponseDto> updateMemoById(
             @PathVariable Long id,
             @RequestBody MemoRequestDto requestDto) {

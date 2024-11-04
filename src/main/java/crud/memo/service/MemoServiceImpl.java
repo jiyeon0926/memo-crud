@@ -4,7 +4,9 @@ import crud.memo.dto.MemoRequestDto;
 import crud.memo.dto.MemoResponseDto;
 import crud.memo.entity.Memo;
 import crud.memo.repository.MemoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,5 +32,17 @@ public class MemoServiceImpl implements MemoService {
         List<MemoResponseDto> allMemos = memoRepository.findAllMemos();
 
         return allMemos;
+    }
+
+    @Override
+    public MemoResponseDto findMemoById(Long id) {
+        Memo memo = memoRepository.findMemoById(id);
+
+        // 예외 처리
+        if (memo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        return new MemoResponseDto(memo);
     }
 }
