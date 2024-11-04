@@ -2,7 +2,6 @@ package crud.memo.dto;
 
 import crud.memo.entity.Memo;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 public class MemoResponseDto {

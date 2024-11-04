@@ -2,13 +2,10 @@ package crud.memo.controller;
 
 import crud.memo.dto.MemoRequestDto;
 import crud.memo.dto.MemoResponseDto;
-import crud.memo.entity.Memo;
 import crud.memo.service.MemoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
 
 @RestController
 @RequestMapping("/memos")

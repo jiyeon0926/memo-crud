@@ -1,6 +1,5 @@
 package crud.memo.entity;
 
-import crud.memo.dto.MemoRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
