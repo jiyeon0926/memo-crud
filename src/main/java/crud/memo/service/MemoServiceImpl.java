@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemoServiceImpl implements MemoService {
@@ -35,19 +36,19 @@ public class MemoServiceImpl implements MemoService {
 
     @Override
     public MemoResponseDto findMemoById(Long id) {
-        Memo memo = memoRepository.findMemoById(id);
+        Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
 
         // 예외 처리
-        if (memo == null) {
+        if (optionalMemo.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-        return new MemoResponseDto(memo);
+        return new MemoResponseDto(optionalMemo.get());
     }
 
     @Override
     public MemoResponseDto updateMemo(Long id, String title, String contents) {
-        Memo memo = memoRepository.findMemoById(id);
+        /*Memo memo = memoRepository.findMemoById(id);
 
         if (memo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
@@ -59,12 +60,13 @@ public class MemoServiceImpl implements MemoService {
 
         memo.update(title, contents);
 
-        return new MemoResponseDto(memo);
+        return new MemoResponseDto(memo);*/
+        return null;
     }
 
     @Override
     public MemoResponseDto updateTitle(Long id, String title, String contents) {
-        Memo memo = memoRepository.findMemoById(id);
+/*        Memo memo = memoRepository.findMemoById(id);
 
         if (memo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
@@ -76,17 +78,18 @@ public class MemoServiceImpl implements MemoService {
 
         memo.updateTitle(title);
 
-        return new MemoResponseDto(memo);
+        return new MemoResponseDto(memo);*/
+        return null;
     }
 
     @Override
     public void deleteMemo(Long id) {
-        Memo memo = memoRepository.findMemoById(id);
+/*        Memo memo = memoRepository.findMemoById(id);
 
         if (memo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-        memoRepository.deleteMemo(id);
+        memoRepository.deleteMemo(id);*/
     }
 }
