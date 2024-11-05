@@ -2,11 +2,13 @@ package crud.memo.repository;
 
 import crud.memo.dto.MemoResponseDto;
 import crud.memo.entity.Memo;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -50,7 +52,15 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
     public Optional<Memo> findMemoById(Long id) {
         // ? 자리에 id 값이 들어가게 됨
         List<Memo> result = jdbcTemplate.query("select * from memo where id = ?", memoRowMapperV2(), id);
+
         return result.stream().findAny();
+    }
+
+    @Override
+    public Memo findMemoByIdOrElseThrow(Long id) {
+        List<Memo> result = jdbcTemplate.query("select * from memo where id = ?", memoRowMapperV2(), id);
+
+        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
     }
 
     @Override
@@ -70,9 +80,7 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
     }
 
     private RowMapper<MemoResponseDto> memoRowMapper() {
-
         return new RowMapper<MemoResponseDto>() {
-
             @Override
             public MemoResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new MemoResponseDto(
@@ -85,9 +93,7 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
     }
 
     private RowMapper<Memo> memoRowMapperV2() {
-
         return new RowMapper<Memo>() {
-
             @Override
             public Memo mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Memo(
