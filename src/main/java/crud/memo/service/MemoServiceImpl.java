@@ -22,9 +22,8 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public MemoResponseDto saveMemo(MemoRequestDto requestDto) {
         Memo memo = new Memo(requestDto.getTitle(), requestDto.getContents());
-        Memo savedMemo = memoRepository.saveMemo(memo);
 
-        return new MemoResponseDto(savedMemo);
+        return memoRepository.saveMemo(memo);
     }
 
     @Override
