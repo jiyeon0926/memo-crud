@@ -54,6 +54,17 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
     }
 
     @Override
+    public int updateMemo(Long id, String title, String contents) {
+        // 값이 들어가는 순서대로 파라미터를 넣어줘야 함
+        return jdbcTemplate.update("update memo set title = ?, contents = ? where id = ?", title, contents, id);
+    }
+
+    @Override
+    public int updateTitle(Long id, String title) {
+        return jdbcTemplate.update("update memo set title = ? where id = ?", title, id);
+    }
+
+    @Override
     public void deleteMemo(Long id) {
 
     }

@@ -6,6 +6,7 @@ import crud.memo.entity.Memo;
 import crud.memo.repository.MemoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -46,40 +47,39 @@ public class MemoServiceImpl implements MemoService {
         return new MemoResponseDto(optionalMemo.get());
     }
 
+    @Transactional
     @Override
     public MemoResponseDto updateMemo(Long id, String title, String contents) {
-        /*Memo memo = memoRepository.findMemoById(id);
-
-        if (memo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-        }
-
         if (title == null || contents == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
 
-        memo.update(title, contents);
+        int updatedRow = memoRepository.updateMemo(id, title, contents);
 
-        return new MemoResponseDto(memo);*/
-        return null;
+        if (updatedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+
+        return new MemoResponseDto(optionalMemo.get());
     }
 
     @Override
     public MemoResponseDto updateTitle(Long id, String title, String contents) {
-/*        Memo memo = memoRepository.findMemoById(id);
-
-        if (memo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-        }
-
         if (title == null || contents != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
 
-        memo.updateTitle(title);
+        int updatedRow = memoRepository.updateTitle(id, title);
 
-        return new MemoResponseDto(memo);*/
-        return null;
+        if (updatedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+
+        return new MemoResponseDto(optionalMemo.get());
     }
 
     @Override
